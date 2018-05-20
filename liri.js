@@ -1,13 +1,11 @@
-//  Grab all the npm packages
-var env = require("dotenv").config();
+require("dotenv").config();
 var keys = require("./keys.js");
-var twitter = require("twitter");
-var spotify = require("node-spotify-api");
+
+//  Grab all the npm packages
+var Twitter = require("twitter");
+var Spotify = require("node-spotify-api");
 var request = require("request");
 var fs = require("fs");
-
-
-var nodeArgs = process.argv;
 
 //  Variable for which function the user chooses
 var userInput = process.argv[2];
@@ -36,21 +34,27 @@ case "do-what-it-says":
 
 //  If userInput equals "my-tweets"
 function displayTweets() {
-
     var client = new Twitter(keys.twitter);
-
-    client.request("https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=darealbobbricks&count=20", function(error, response, body) {
-
-        // If the request was successful
-        if (!error && response.statusCode === 200) {
-          // Display the tweets
-          console.log(JSON.parse(body).count);
+    
+    var params = {screen_name: 'darealbobbricks', count: 20};
+    client.get('statuses/user_timeline', params, function(error, tweets, response) {
+        if (!error) {
+            for(var i=0; i < params.count; i++) {
+                console.log(tweets[i].text);
+            }
         }
     });
 }
 
-function displaySpotify() {
-
+function displaySpotify(query) {
+    var spotify = new Spotify(keys.spotify);
+    
+    spotify.search({ type: 'track', query: query }, function(err, data) {
+        if (err) {
+            return console.log('Error occurred: ' + err);
+        }
+        console.log(data); 
+    });
 }
 
 function displayOmdb() {
@@ -76,23 +80,24 @@ function displayOmdb() {
 
         // If the request is successful
         if (!error && response.statusCode === 200) {
+            var jsonData = JSON.parse(body);
 
             // Log the Title
-            console.log("Title: " + JSON.parse(body).Title);
+            console.log("Title: " + jsonData.Title);
             // Log the Year
-            console.log("Release Year: " + JSON.parse(body).Year);
+            console.log("Release Year: " + jsonData.Year);
             // Log the IMDB Rating
-            console.log("IMDB Rating: " + JSON.parse(body).imdbRating);
+            console.log("IMDB Rating: " + jsonData.imdbRating);
             // Log the Rotten Tomatoes Rating
-            // console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
+            // console.log("Rotten Tomatoes Rating: " + jsonData.Ratings[1].Value);
             // Log the Country
-            console.log("Produced in: " + JSON.parse(body).Country);
+            console.log("Produced in: " + jsonData.Country);
             // Log the Language
-            console.log("Language: " + JSON.parse(body).Year);
+            console.log("Language: " + jsonData.Year);
             // Log the Plot
-            console.log("Plot: " + JSON.parse(body).Plot);
+            console.log("Plot: " + jsonData.Plot);
             // Log the Actors
-            console.log("Actors: " + JSON.parse(body).Actors);
+            console.log("Actors: " + jsonData.Actors);
         }
     });
 

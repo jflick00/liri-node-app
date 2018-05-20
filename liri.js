@@ -46,17 +46,33 @@ function displayTweets() {
     });
 }
 
+//  If userInput equals "spotify-this-song"
 function displaySpotify(query) {
     var spotify = new Spotify(keys.spotify);
-    
-    spotify.search({ type: 'track', query: query }, function(err, data) {
+    this.newQuery = query;
+    spotify.search({ type: 'track', query: this.query }, function(err, data) {
         if (err) {
             return console.log('Error occurred: ' + err);
         }
-        console.log(data); 
+        
+        console.log("Artist(s): " + data.tracks.items[0].artists[0].name + "\n");
+        console.log("Song Title: " + data.tracks.items[0].name + "\n");
+        console.log("Preview Link: " + data.tracks.items[0].preview_url + "\n");
+        console.log("Album: " + data.tracks.items[0].album.name);
+        
     });
+    
+//     spotify
+//   .search({ type: 'track', query: 'All the Small Things' })
+//   .then(function(response) {
+//     console.log(response);
+//   })
+//   .catch(function(err) {
+//     console.log(err);
+//   });
 }
 
+//  If userInput equals "movie-this"
 function displayOmdb() {
 
     // Create an empty variable for holding the movie name
@@ -103,6 +119,7 @@ function displayOmdb() {
 
 }
 
+//  If userInput equals "do-what-it-says"
 function doWhatitsays() {
 
 }

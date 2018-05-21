@@ -16,47 +16,47 @@ var optuserInput = process.argv[3];
 // The switch-case will direct which function gets run
 switch (userInput) {
 case "my-tweets":
-    console.log("-----------------------------------------------------\n")
-    console.log("my-tweets\n")
-    console.log("-----------------------------------------------------\n")
+    console.log("-----------------------------------------------------\n");
+    console.log("my-tweets\n");
+    console.log("-----------------------------------------------------\n");
     displayTweets();
     break;
 
 case "spotify-this-song":
     if (optuserInput) {
-        console.log("-----------------------------------------------------\n")
-        console.log("spotify-this-song\n")
-        console.log("-----------------------------------------------------\n")
+        console.log("-----------------------------------------------------\n");
+        console.log("spotify-this-song\n");
+        console.log("-----------------------------------------------------\n");
         displaySpotify(optuserInput);
     }
     if (!optuserInput) {
-        console.log("-----------------------------------------------------\n")
-        console.log("spotify-this-song\n")
-        console.log("-----------------------------------------------------\n")
+        console.log("-----------------------------------------------------\n");
+        console.log("spotify-this-song\n");
+        console.log("-----------------------------------------------------\n");
         console.log("Artist(s): Ace of Base\n" + "Song Title: The Sign\n" + "Album: Happy Nation");
     }
     break;
 
 case "movie-this":
     if (optuserInput) {
-        console.log("-----------------------------------------------------\n")
-        console.log("movie-this\n")
-        console.log("-----------------------------------------------------\n")
+        console.log("-----------------------------------------------------\n");
+        console.log("movie-this\n");
+        console.log("-----------------------------------------------------\n");
         displayOmdb(optuserInput);
     }
     if (!optuserInput) {
         optuserInput = "Mr Nobody";
-        console.log("-----------------------------------------------------\n")
-        console.log("movie-this\n")
-        console.log("-----------------------------------------------------\n")
+        console.log("-----------------------------------------------------\n");
+        console.log("movie-this\n");
+        console.log("-----------------------------------------------------\n");
         displayOmdb(optuserInput);
     }
     break;
 
 case "do-what-it-says":
-    console.log("-----------------------------------------------------\n")
-    console.log("do-what-it-says\n")
-    console.log("-----------------------------------------------------\n")
+    console.log("-----------------------------------------------------\n");
+    console.log("do-what-it-says\n");
+    console.log("-----------------------------------------------------\n");
     doWhatitsays();
     break;
 }
@@ -64,13 +64,13 @@ case "do-what-it-says":
 //  Display menu to let user know possible arguments to enter
 function displayArguments() {
 	if (!userInput) {
-        console.log("-----------------------------------------------------\n")
+        console.log("-----------------------------------------------------\n");
         console.log("LIRI Menu\n");
-        console.log("-----------------------------------------------------\n")
-		console.log("1: my-tweets\n");
-		console.log("2: spotify-this-song '<artist, album, or track here>'\n");
-		console.log("3: movie-this '<movie name here>'\n");
-		console.log("4: do-what-it-says");
+        console.log("-----------------------------------------------------\n");
+        console.log("1: my-tweets\n");
+        console.log("2: spotify-this-song '<artist, track, or album here>'\n");
+        console.log("3: movie-this '<movie name here>'\n");
+        console.log("4: do-what-it-says");
 	}
 }
 

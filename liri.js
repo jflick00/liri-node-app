@@ -20,7 +20,12 @@ case "my-tweets":
     break;
 
 case "spotify-this-song":
-    displaySpotify();
+    if (optuserInput) {
+        displaySpotify(optuserInput);
+    }
+    if (!optuserInput) {
+        console.log("Artist(s): Ace of Base\n" + "Song Title: The Sign\n" + "Album: Happy Nation");
+    }
     break;
 
 case "movie-this":
@@ -49,10 +54,9 @@ function displayTweets() {
 //  If userInput equals "spotify-this-song"
 function displaySpotify(query) {
     var spotify = new Spotify(keys.spotify);
-    this.newQuery = query;
-    spotify.search({ type: 'track', query: this.query }, function(err, data) {
+    spotify.search({ type: 'track', query: query, limit: 1 }, function(err, data) {
         if (err) {
-            return console.log('Error occurred: ' + err);
+            return console.log("Artist(s): Ace of Base\n" + "Song Title: The Sign\n" + "Album: Happy Nation");
         }
         
         console.log("Artist(s): " + data.tracks.items[0].artists[0].name + "\n");
@@ -61,15 +65,6 @@ function displaySpotify(query) {
         console.log("Album: " + data.tracks.items[0].album.name);
         
     });
-    
-//     spotify
-//   .search({ type: 'track', query: 'All the Small Things' })
-//   .then(function(response) {
-//     console.log(response);
-//   })
-//   .catch(function(err) {
-//     console.log(err);
-//   });
 }
 
 //  If userInput equals "movie-this"

@@ -29,7 +29,13 @@ case "spotify-this-song":
     break;
 
 case "movie-this":
-    displayOmdb();
+    if (optuserInput) {
+        displayOmdb(optuserInput);
+    }
+    if (!optuserInput) {
+        optuserInput = "Mr Nobody";
+        displayOmdb(optuserInput);
+    }
     break;
 
 case "do-what-it-says":
@@ -68,30 +74,16 @@ function displaySpotify(query) {
 }
 
 //  If userInput equals "movie-this"
-function displayOmdb() {
+function displayOmdb(optuserInput) {
 
-    // Create an empty variable for holding the movie name
-    var movieName = "";
+    var omdb = keys.omdb.api_key + optuserInput;
+    
+    request(omdb, function(error, response, body) {
 
-    // Loop through all the words in the node argument
-    // And do a little for-loop magic to handle the inclusion of "+"s
-    for (var i = 2; i < nodeArgs.length; i++) {
-        if (i > 2 && i < nodeArgs.length) {
-            movieName = movieName + "+" + nodeArgs[i];
-        }
-        else {
-            movieName += nodeArgs[i];
-        }
-    }
-
-    // Then run a request to the OMDB API with the movie specified
-    var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
-
-    request(queryUrl, function(error, response, body) {
-
+        var jsonData = JSON.parse(body);
+        
         // If the request is successful
         if (!error && response.statusCode === 200) {
-            var jsonData = JSON.parse(body);
 
             // Log the Title
             console.log("Title: " + jsonData.Title);
@@ -100,7 +92,7 @@ function displayOmdb() {
             // Log the IMDB Rating
             console.log("IMDB Rating: " + jsonData.imdbRating);
             // Log the Rotten Tomatoes Rating
-            // console.log("Rotten Tomatoes Rating: " + jsonData.Ratings[1].Value);
+            console.log("Rotten Tomatoes Rating: " + jsonData.Ratings[1].Value);
             // Log the Country
             console.log("Produced in: " + jsonData.Country);
             // Log the Language
@@ -110,6 +102,7 @@ function displayOmdb() {
             // Log the Actors
             console.log("Actors: " + jsonData.Actors);
         }
+
     });
 
 }
